@@ -8,7 +8,7 @@
 1. TypeScript Configuration for React Native
 2. Creating Component Types
     * Define the interfaces needed for mobile controls. (src/types/index.ts)
-
+3. Socket Connection Setup  (src/hooks/useVehicleConnection.ts)
 
 <br>
 
@@ -38,3 +38,8 @@
 1. mkdir: src: No such file or directory.  The project has no "src" directory and the command "mkdir src/types" gave the error message.
    Resolved: Mannualy created the "src" file, cd into "src" and proceed with "mkdir types".
 
+2. tsconfig.json _ "compilerOptions" Option 'customConditions' can only be used when 'moduleResolution' is set to 'node16', 'nodenext', or 'bundler'.
+Resolved: - on Hold
+
+3. useVehicleConnections.ts Import shared-types error
+   Resolved: Updated to point to '../../../shared-types'
