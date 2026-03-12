@@ -12,7 +12,11 @@
 
 - Read the React Native documentation on PanResponder and TypeScript integration
 
+   [PanResponder](https://reactnative.dev/docs/panresponder) <br>
+   [TypScript Integration](https://reactnative.dev/docs/integration-with-existing-apps#4-writing-the-typescript-code)
+
 - Review TypeScript basics if needed (interfaces, type annotations, generics)
+   [TypeScript Basics](https://www.typescriptlang.org/docs/handbook/2/basic-types.html) 
 
 - Sketch ideas for your mobile control interface layout
 

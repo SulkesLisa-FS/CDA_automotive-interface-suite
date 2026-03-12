@@ -14,7 +14,17 @@ TERM: C202603
 - Shared Type Definitions for maintaining consistency and preventing bugs: Acts as a common language between all applictions. <br>
 
 
+### Run Expo
+    
+    npx expo start
+
+    npx expo start --clear
+
+<br>
+
+
 ### Expo TEST Platforms
+    
     npm run android
 
     npm run ios
@@ -37,4 +47,6 @@ Run:
 
 ### PORTS:
 
-- Server Start-Up: 3001
+- Server:      3001
+
+- iOS: &emsp;  8081
