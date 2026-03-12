@@ -9,7 +9,7 @@ TERM: C202603
 
 1 - mobile-controls (Phone Interface: Serves as the "steering wheel" interface)
 2 - tablet-cluster  (Dashboard Display: Speed, RPM, Fuel Levels, Warnings..etc.)
-3 - web-map         (Trafic Controller Center)
+3 - web-map         (Trafic Controller Center: Set speed limits, create alerts, and monitor vehicle postion in real time)
 4 - typscript-server (Central Communication Hub)
 
 ### TEST Platforms

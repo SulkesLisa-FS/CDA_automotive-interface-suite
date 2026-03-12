@@ -20,3 +20,4 @@
 Step 1: Create the Main Project Directory
 Step 2: Create the Mobile Controls App
 Step 3: Create the Tablet Cluster App
+Step 4: Create the Web Map Interface
