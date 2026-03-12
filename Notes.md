@@ -34,10 +34,16 @@ Build the Server:
 Step 1: Configure the Server Scripts 
 Step 2: Configure TypeScript for Modern ES Modules
 Step 3: Create the Server Directory Structure
-Step 4: Import Dependencies and Setup (server/src/index.ts)
-Step 5: Express and Socket.IO Setup (server/src/index.ts)
-Step 6: Initialize Vehicle State (server/src/index.ts)
-Step 7: Client Tracking and Socket Extension (server/src/index.ts)
+Step 4: Import Dependencies and Setup  (server/src/index.ts)
+Step 5: Express and Socket.IO Setup  (server/src/index.ts)
+Step 6: Initialize Vehicle State  (server/src/index.ts)
+Step 7: Client Tracking and Socket Extension  (server/src/index.ts)
+Step 8: Connection Handling  (server/src/index.ts)
+Step 9: Control Input Handling
+Step 10: Physics Simulation
+Step 11: Server Startup
+
+
 
 
 
@@ -48,3 +54,13 @@ Step 7: Client Tracking and Socket Extension (server/src/index.ts)
 
 1. Import Error in server/src/index.ts for ../shared-types/index.js
    Resolved: Updated to point to ../../shared-types/index.js
+
+2. Error in server/src/index.ts: '}' expected. in Handle Client Type
+   Resolved: Added '});'at the end of the socket.on function. 
+
+3. Error in server/src/index.ts: Cannot find name 'socket'.
+   Resolved: After reviewing, socket is outside of the scope. <b>
+   the 2nd Error was not an error, the code block was not completed yet.
+   - Removed the endding '});' of the block. 
+   - Will finish adding code for issue to resolve itself.
+   - Issue did not resolve - Added '});' at the end of the Control Input Handeling block. 
