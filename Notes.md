@@ -27,3 +27,4 @@ Step 6: Create Shared Type Definitions <br>
 - II Server Infrastructure
 
     * Create the foundation of the type-safe architecture
+    * Build the Server
