@@ -6,7 +6,8 @@
 
 
 1. TypeScript Configuration for React Native
-
+2. Creating Component Types
+    * Define the interfaces needed for mobile controls. (src/types/index.ts)
 
 
 <br>
@@ -33,4 +34,7 @@
 <br>
 <br>
 
-# Trouble Shooting Errors:
+# Trouble Shooting Issues & Errors:
+1. mkdir: src: No such file or directory.  The project has no "src" directory and the command "mkdir src/types" gave the error message.
+   Resolved: Mannualy created the "src" file, cd into "src" and proceed with "mkdir types".
+
