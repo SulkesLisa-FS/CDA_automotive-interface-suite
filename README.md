@@ -15,6 +15,9 @@ TERM: C202603
 
 
 ### Expo TEST Platforms
+    
+    npm expo start
+    
     npm run android
 
     npm run ios

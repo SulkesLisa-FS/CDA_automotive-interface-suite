@@ -4,6 +4,11 @@
 
 ### What I completed in Part 2:  
 
+
+1. TypeScript Configuration for React Native
+
+
+
 <br>
 
 
