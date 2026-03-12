@@ -34,8 +34,9 @@ Build the Server:
 Step 1: Configure the Server Scripts 
 Step 2: Configure TypeScript for Modern ES Modules
 Step 3: Create the Server Directory Structure
-Step 4: Import Dependencies and Setup
-Step 5: Express and Socket.IO Setup
+Step 4: Import Dependencies and Setup (server/src/index.ts)
+Step 5: Express and Socket.IO Setup (server/src/index.ts)
+Step 6: Initialize Vehicle State (server/src/index.ts)
 
 
 
