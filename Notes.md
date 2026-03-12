@@ -16,8 +16,10 @@
 
 - Record a small demo of the project running at this point and add a link to a YouTube or other video streaming service to the response section of this lesson.
 
-
-Step 1: Create the Main Project Directory
-Step 2: Create the Mobile Controls App
-Step 3: Create the Tablet Cluster App
-Step 4: Create the Web Map Interface
+### What I completed in Part 1:
+Step 1: Create the Main Project Directory <br>
+Step 2: Create the Mobile Controls App <br>
+Step 3: Create the Tablet Cluster App <br>
+Step 4: Create the Web Map Interface <br>
+Step 5: Create the TypeScript Server <br>
+Step 6: Create Shared Type Definitions <br>
