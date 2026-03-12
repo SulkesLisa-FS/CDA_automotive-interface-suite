@@ -54,19 +54,21 @@ NEXT...
 NEXT...
 
 ### Proof of Work
-[ ] all four TypeScript projects are created with dependencies installed
+- [ ] all four TypeScript projects are created with dependencies installed
 
-[ ] Create shared-types module
-[ ] compile the shared-types module
+- [ ] Create shared-types module
 
-   npx tsc 
+- [ ] compile the shared-types module
 
+- [ ] Test the TypeScript server with the provided HTML client
 
+- [ ] Record a small demo of the project running 
 
+- [ ] Read: React Native documentation  & TypeScript basics
 
+- [ ] Sketch Mobile Interface - Low Fidelity
 
-
-
+<br>
 
 # Trouble Shooting Errors:
 
