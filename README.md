@@ -47,4 +47,6 @@ Run:
 
 ### PORTS:
 
-- Server Start-Up: 3001
+- Server:      3001
+
+- iOS: &emsp;  8081

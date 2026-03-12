@@ -45,7 +45,8 @@ export default function SteeringSlider({ onSteer, disabled = false }: SteeringSl
       // Apply dead zone
       const deadZone = 0.05;
       const steeringValue = Math.abs(normalizedPosition) < deadZone ? 0 : normalizedPosition;
-      
+     
+      console.log('[UI] steering return:', steeringValue.toFixed(2));
       onSteer(steeringValue);
     },
     

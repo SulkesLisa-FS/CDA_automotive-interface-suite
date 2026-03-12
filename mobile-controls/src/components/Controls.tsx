@@ -6,10 +6,12 @@ type Gear = typeof GEARS[number];
 export default function Controls({ onControl, currentGear = 'P', systems }: ControlsProps) {
   
   const handleGearChange = (gear: Gear) => {
+    console.log('[UI] gear', gear);
     onControl('gear', gear);
   };
   const handleSystemToggle = (system: string) => {
     const currentValue = systems?.[system as keyof typeof systems] || false;
+    console.log('[UI] toggle:', system, '=', !currentValue);
     onControl(system, !currentValue);
   };
   return (
