@@ -49,7 +49,22 @@ NEXT...
 
 ## Testing The Server
 1. Run Server - npm run dev
-2. Create a Test Client
+2. Create a Test Client  <br>
+
+NEXT...
+
+### Proof of Work
+[ ] all four TypeScript projects are created with dependencies installed
+
+[ ] Create shared-types module
+[ ] compile the shared-types module
+
+   npx tsc 
+
+
+
+
+
 
 
 
