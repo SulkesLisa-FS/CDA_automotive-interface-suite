@@ -45,6 +45,8 @@ export interface WarningSystemProps {
     rightSignal: boolean;
     hazards: boolean;
   };
+    brake: number;
+  steering: number;
 }
 // Trip computer interface
 export interface TripComputerProps {
@@ -79,6 +81,8 @@ export interface StatusPanelProps {
   odometer: number;
   fuel: number;
   battery: number;
+   brake: number;
+  steering: number;
 }
 // Main dashboard state
 export interface DashboardState {

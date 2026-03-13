@@ -4,11 +4,11 @@ import Svg, { Circle, Path, Line, Text as SvgText, Defs, RadialGradient, Stop, G
 import { SpeedometerProps } from '../types/dashboard';
 import { calculateGaugePosition, generateGaugePath, formatSpeed } from '../utils/gaugeUtils';
 const AnimatedG = Animated.createAnimatedComponent(G);
-const SPEEDOMETER_SIZE = 200;
-const CENTER_X = SPEEDOMETER_SIZE / 2;
-const CENTER_Y = SPEEDOMETER_SIZE / 2;
-const GAUGE_RADIUS = 80;
-const NEEDLE_LENGTH = 70;
+const SPEEDOMETER_SIZE = 300;
+const CENTER_X = SPEEDOMETER_SIZE / 2.5;
+const CENTER_Y = SPEEDOMETER_SIZE / 2.4;
+const GAUGE_RADIUS = 100;
+const NEEDLE_LENGTH = 95;
 export default function Speedometer({ 
   speed, 
   size = SPEEDOMETER_SIZE, 

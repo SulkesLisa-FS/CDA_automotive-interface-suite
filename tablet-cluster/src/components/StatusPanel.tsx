@@ -10,13 +10,15 @@ export default function StatusPanel({
   warnings, 
   systems, 
   trip, 
-  odometer 
+  odometer, 
+   brake,
+  steering
 }: StatusPanelProps) {
   
   return (
     <View style={styles.container}>
       <View style={styles.leftPanel}>
-        <WarningPanel warnings={warnings} systems={systems} />
+        <WarningPanel warnings={warnings} systems={systems}  brake={brake} steering={steering}  />
       </View>
       
       <View style={styles.rightPanel}>

@@ -21,7 +21,7 @@ export default function MainGauges({ speed, rpm, accelerating }: MainGaugesProps
       <View style={styles.secondaryGauge}>
         <RPMGauge
           rpm={rpm}
-          size={width > 600 ? 200 : 160}
+          size={width > 600 ? 240 : 200}
           maxRpm={6000}
           redline={5000}
         />

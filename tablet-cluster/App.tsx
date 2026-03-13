@@ -36,6 +36,8 @@ export default function App() {
         systems={vehicleState.systems}
         trip={vehicleState.cluster.trip}
         odometer={vehicleState.cluster.odometer}
+        brake={vehicleState.controls.brake}
+        steering={vehicleState.controls.steering}
       />
     </View>
   );

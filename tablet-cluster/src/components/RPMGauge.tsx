@@ -4,11 +4,11 @@ import Svg, { Circle, Path, Line, Text as SvgText, Defs, RadialGradient, Stop, G
 import { RPMGaugeProps } from '../types/dashboard';
 import { calculateGaugePosition, generateGaugePath, formatRPM } from '../utils/gaugeUtils';
 const AnimatedG = Animated.createAnimatedComponent(G);
-const RPM_GAUGE_SIZE = 180;
-const CENTER_X = RPM_GAUGE_SIZE / 2;
-const CENTER_Y = RPM_GAUGE_SIZE / 2;
-const GAUGE_RADIUS = 70;
-const NEEDLE_LENGTH = 60;
+const RPM_GAUGE_SIZE = 300;
+const CENTER_X = RPM_GAUGE_SIZE / 2.5;
+const CENTER_Y = RPM_GAUGE_SIZE / 2.2;
+const GAUGE_RADIUS = 100;
+const NEEDLE_LENGTH = 95;
 export default function RPMGauge({ 
   rpm, 
   size = RPM_GAUGE_SIZE, 
@@ -215,7 +215,7 @@ export default function RPMGauge({
         <Circle
           cx={CENTER_X}
           cy={CENTER_Y}
-          r="25"
+          r="35"
           fill="#000"
           stroke="#333"
           strokeWidth="1"
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   unitText: {
-    fontSize: 8,
+    fontSize: 9,
     color: '#888',
     marginTop: -3,
   },
@@ -258,6 +258,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#888',
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: 20,
   },
 });

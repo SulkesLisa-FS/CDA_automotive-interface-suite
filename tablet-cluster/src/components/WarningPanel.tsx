@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, ScrollView, Text } from 'react-native';
 import StatusIndicator from './StatusIndicator';
 import { WarningSystemProps } from '../types/dashboard';
-export default function WarningPanel({ warnings, systems }: WarningSystemProps) {
+export default function WarningPanel({ warnings, systems, brake, steering  }: WarningSystemProps) {
   
   return (
     <View style={styles.container}>
@@ -40,6 +40,20 @@ export default function WarningPanel({ warnings, systems }: WarningSystemProps) 
           label="HAZARD"
           blinking={systems.hazards}
         />
+
+          <StatusIndicator
+          active={brake > 0}
+          type="danger"
+          icon="🛑"
+          label="BRAKE"
+        />
+        
+        <StatusIndicator
+          active={steering !== 0}
+          type="info"
+          icon={steering < 0 ? "⬅️" : steering > 0 ? "➡️" : "🔘"}
+          label="STEER"
+        />
       </View>
       
       {/* Warning messages */}
@@ -60,7 +74,8 @@ export default function WarningPanel({ warnings, systems }: WarningSystemProps) 
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#1a1a1a',
+    // backgroundColor: '#1a1a1a',
+    backgroundColor: '#161b2e',
     borderRadius: 10,
     padding: 15,
     margin: 10,
@@ -68,7 +83,7 @@ const styles = StyleSheet.create({
     borderColor: '#333',
   },
   title: {
-    color: '#888',
+    color: '#928e8efc',
     fontSize: 12,
     fontWeight: 'bold',
     textAlign: 'center',

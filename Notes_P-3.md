@@ -50,10 +50,28 @@
 
 ### Proof of Work
 
+- [ ] Customize gauge styling: Try different color schemes, sizes, or visual effects
+
+- [ ] Add new indicators: Create additional warning lights or status displays  
+
+- [ ] Test edge cases: What happens with extreme values or connection loss?
+      * Disconnect Server - Conectins status for mobile and table turns to disconnected
+      * Watched for stales data in tablet
+      * Start Server - opened test client in the browser and tested changes in mobile
+
+- [ ] Performance profiling: Use React Native debugger to monitor your dashboard
+
+- [ ] Document improvements: Note any enhancements or issues you discover
+
+- [ ] Record a small demo of the project running at this point and add a link to a YouTube or other video streaming service to the response section of this lesson.
 
 
 
+# Changes:
 
+1. Made the RPM guage a little larger than the speed guage and repositioned it.
+2. Add Indicators for Steering and Break in the Vehicle Staus
+3. Warning Pannel Changed Background and Title colrfor 
 
 
 
@@ -102,11 +120,11 @@ React-Native: https://reactnative.dev/docs/transforms
 W3Schools: SVG Tutorial: https://www.w3schools.com/graphics/svg_intro.asp
 
 
-- Transform did not work - is an object and not seen as a number
+- First tried "Transform" but it did not work - is an object and not seen as a number
 - Had to create an Animated component using <G>
 
 
-__________________
+_______________________________________________________________
 
 1. Right After Improts Add: 
 
