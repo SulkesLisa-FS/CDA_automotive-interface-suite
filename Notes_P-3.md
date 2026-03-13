@@ -116,7 +116,8 @@ MDN https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/transfo
 React-native-svg: https://github.com/software-mansion/react-native-svg
 
 React-Native: https://reactnative.dev/docs/transforms
-React-Native API : https://reactnative.dev/docs/animations#interpolation
+
+**React-Native API : https://reactnative.dev/docs/animations#interpolation** [Most Helpful]
 
 W3Schools: SVG Tutorial: https://www.w3schools.com/graphics/svg_intro.asp
 
