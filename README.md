@@ -14,11 +14,14 @@ TERM: C202603
 - Shared Type Definitions for maintaining consistency and preventing bugs: Acts as a common language between all applictions. <br>
 
 
-### Run Expo
+### Run Expo:  mobile-controls , tablet-cluster
     
     npx expo start
 
     npx expo start --clear
+
+    Press: i for mobile
+    Press: i for tablet
 
 <br>
 
@@ -33,12 +36,22 @@ TERM: C202603
 
 <br>
 
+
+### React-Native Debugger
+
+To Open: Run expo
+
+    Press: j  for expo-React Native Dev Tools
+
+
+    
+
 ### Server Scripts
 - "dev": Uses tsx for seamless TypeScript development with ES modules
 - "build": Compiles TypeScript to JavaScript
 - "start": Runs compiled JavaScript in production
 
-Run: 
+### Run the Server: 
 
     npm run dev    - Development
     
