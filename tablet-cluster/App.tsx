@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, View, StatusBar as RNStatusBar, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useDashboardConnection } from './src/hooks/useDashboardConnection';
-// import DashboardHeader from './src/components/DashboardHeader';
-// import MainGauges from './src/components/MainGauges';
-// import StatusPanel from './src/components/StatusPanel';
+import DashboardHeader from './src/components/DashboardHeader';
+import MainGauges from './src/components/MainGauges';
+import StatusPanel from './src/components/StatusPanel';
 const { width, height } = Dimensions.get('window');
 export default function App() {
   const { vehicleState, connected, lastUpdate } = useDashboardConnection();
@@ -14,29 +14,29 @@ export default function App() {
       <RNStatusBar hidden />
       
       {/* Dashboard Header with connection status */}
-      {/* <DashboardHeader 
+      <DashboardHeader 
         connected={connected}
         lastUpdate={lastUpdate}
         gear={vehicleState.controls.gear}
         speedLimit={vehicleState.environment.speedLimit}
-      /> */}
+      />
       
       {/* Main gauge cluster */}
-      {/* <MainGauges
+      <MainGauges
         speed={vehicleState.motion.speed}
         rpm={vehicleState.cluster.rpm}
         accelerating={vehicleState.motion.accelerating}
-      /> */}
+      />
       
       {/* Status indicators and trip computer */}
-      {/* <StatusPanel
+      <StatusPanel
         fuel={vehicleState.cluster.fuel}
         battery={vehicleState.cluster.battery}
         warnings={vehicleState.cluster.warnings}
         systems={vehicleState.systems}
         trip={vehicleState.cluster.trip}
         odometer={vehicleState.cluster.odometer}
-      /> */}
+      />
     </View>
   );
 }
