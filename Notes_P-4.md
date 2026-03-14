@@ -17,6 +17,7 @@
 2. Vehicle Tracking Map Component 
     * (Signup: mapbox - Get Access Token // Create .env)
     * (Create: VehicleMap.tsx)
+3. Map Styling  (VehicleMap.css)
 
 
 
