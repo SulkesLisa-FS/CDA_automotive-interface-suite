@@ -1,35 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import React from 'react';
+import './App.css';
+import { useTrafficControl } from './hooks/useTrafficControl';
+import VehicleMap from './components/VehicleMap';
+import ControlPanel from './components/ControlPanel';
+import AdminDashboard from './components/AdminDashboard';
 function App() {
-  const [count, setCount] = useState(0)
-
+  const {
+    connected,
+    vehicles,
+    systemMetrics,
+    speedZones,
+    alerts,
+    updateEnvironment,
+    createAlert,
+    updateSpeedLimit
+  } = useTrafficControl();
+  const handleMapClick = (lng: number, lat: number) => {
+    console.log(`Map clicked at: (${lng.toFixed(4)}, ${lat.toFixed(4)})`);
+    // Could add functionality to create alerts at clicked location
+  };
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      <header className="app-header">
+        <h1>🚦 Automotive Traffic Control Center</h1>
+        <div className="header-info">
+          <span>Real-time Vehicle Monitoring & Management System</span>
+        </div>
+      </header>
+      <main className="app-main">
+        <div className="main-grid">
+          {/* Vehicle Tracking Map */}
+          <div className="map-section">
+            <VehicleMap
+              vehicles={vehicles}
+              speedZones={speedZones}
+              alerts={alerts}
+              onMapClick={handleMapClick}
+            />
+          </div>
+          {/* Control Panel */}
+          <div className="control-section">
+            <ControlPanel
+              onSpeedLimitChange={updateSpeedLimit}
+              onAlertCreate={createAlert}
+              onEnvironmentUpdate={updateEnvironment}
+              currentSpeedLimit={55}
+              activeAlerts={alerts}
+            />
+          </div>
+        </div>
+        {/* Admin Dashboard */}
+        <div className="admin-section">
+          <AdminDashboard
+            metrics={systemMetrics}
+            connectionStatus={connected}
+          />
+        </div>
+      </main>
+      <footer className="app-footer">
+        <div className="footer-content">
+          <span>Automotive Interface Suite • Lesson 4: Web Traffic Control Center</span>
+          <span>Status: {connected ? '🟢 Connected' : '🔴 Disconnected'}</span>
+        </div>
+      </footer>
+    </div>
+  );
 }
-
-export default App
+export default App;
