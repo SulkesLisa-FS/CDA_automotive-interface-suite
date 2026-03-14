@@ -1,84 +1,113 @@
-import React, { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Animated } from 'react-native';
-import Svg, { Circle, Path, Line, Text as SvgText, Defs, RadialGradient, Stop, G } from 'react-native-svg';
-import { RPMGaugeProps } from '../types/dashboard';
-import { calculateGaugePosition, generateGaugePath, formatRPM } from '../utils/gaugeUtils';
+import React, { useEffect, useRef } from "react";
+import { View, Text, StyleSheet, Animated } from "react-native";
+import Svg, {
+  Circle,
+  Path,
+  Line,
+  Text as SvgText,
+  Defs,
+  RadialGradient,
+  Stop,
+  G,
+} from "react-native-svg";
+import { RPMGaugeProps } from "../types/dashboard";
+import {
+  calculateGaugePosition,
+  generateGaugePath,
+  formatRPM,
+} from "../utils/gaugeUtils";
 const AnimatedG = Animated.createAnimatedComponent(G);
 const RPM_GAUGE_SIZE = 300;
 const CENTER_X = RPM_GAUGE_SIZE / 2.5;
 const CENTER_Y = RPM_GAUGE_SIZE / 2.2;
 const GAUGE_RADIUS = 100;
 const NEEDLE_LENGTH = 95;
-export default function RPMGauge({ 
-  rpm, 
-  size = RPM_GAUGE_SIZE, 
-  maxRpm = 6000,
+export default function RPMGauge({
+  rpm,
+  size = RPM_GAUGE_SIZE,
+  maxRpm = 6000, 
   redline = 5000,
-  color = '#00AAFF' 
+  color = "#00AAFF",
 }: RPMGaugeProps) {
-  
   const needleRotation = useRef(new Animated.Value(-120)).current;
   const pulseAnimation = useRef(new Animated.Value(1)).current;
-  
+
   useEffect(() => {
     const gaugeCalc = calculateGaugePosition(
-      rpm, 
-      0, 
-      maxRpm, 
-      -120, 
-      120, 
-      CENTER_X, 
-      CENTER_Y, 
+      rpm,
+      0,
+      maxRpm,
+      -120,
+      120,
+      CENTER_X,
+      CENTER_Y,
       NEEDLE_LENGTH,
       redline * 0.9, // Warning zone
-      redline        // Redline zone
+      redline, // Redline zone
     );
-    
+
     Animated.timing(needleRotation, {
       toValue: gaugeCalc.angle,
       duration: 200, // Faster response for RPM
       useNativeDriver: false,
     }).start();
-    
+
     // Redline warning animation
     if (rpm > redline) {
       Animated.loop(
         Animated.sequence([
-          Animated.timing(pulseAnimation, { toValue: 1.1, duration: 300, useNativeDriver: true }),
-          Animated.timing(pulseAnimation, { toValue: 1.0, duration: 300, useNativeDriver: true })
-        ])
+          Animated.timing(pulseAnimation, {
+            toValue: 1.1,
+            duration: 300,
+            useNativeDriver: true,
+          }),
+          Animated.timing(pulseAnimation, {
+            toValue: 1.0,
+            duration: 300,
+            useNativeDriver: true,
+          }),
+        ]),
       ).start();
     } else {
       pulseAnimation.stopAnimation();
-      Animated.timing(pulseAnimation, { toValue: 1.0, duration: 200, useNativeDriver: true }).start();
+      Animated.timing(pulseAnimation, {
+        toValue: 1.0,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
     }
 
     return () => {
       needleRotation.stopAnimation();
       pulseAnimation.stopAnimation();
     };
-
-  }, [rpm, redline, maxRpm]);
+  }, 
+  
+  [rpm, redline, maxRpm]);
   const generateRPMTicks = () => {
     const ticks = [];
     const tickCount = 6; // 0, 1, 2, 3, 4, 5, 6 (x1000 RPM)
-    
+    console.log('maxRpm:', maxRpm, 'tickCount:', tickCount);
+
+
+
     for (let i = 0; i <= tickCount; i++) {
       const value = (maxRpm / 1000 / tickCount) * i;
+      console.log('Tick', i, '- value:', value, '- expected:', (maxRpm / tickCount) * i);
       const angle = -120 + (240 / tickCount) * i;
       const radians = (angle * Math.PI) / 180;
-      
+
       const tickLength = 12;
       const startRadius = GAUGE_RADIUS - tickLength;
       const endRadius = GAUGE_RADIUS;
-      
+
       const x1 = CENTER_X + Math.cos(radians) * startRadius;
       const y1 = CENTER_Y + Math.sin(radians) * startRadius;
       const x2 = CENTER_X + Math.cos(radians) * endRadius;
       const y2 = CENTER_Y + Math.sin(radians) * endRadius;
-      
-      const isRedline = (value * 1000) >= redline;
-      
+
+      const isRedline = value * 1000 >= redline;
+
       ticks.push(
         <Line
           key={`rpm-tick-${i}`}
@@ -88,14 +117,14 @@ export default function RPMGauge({
           y2={y2}
           stroke={isRedline ? "#FF4444" : "#666"}
           strokeWidth="2"
-        />
+        />,
       );
-      
+
       // Add numbers
       const numberRadius = GAUGE_RADIUS - 20;
       const numberX = CENTER_X + Math.cos(radians) * numberRadius;
       const numberY = CENTER_Y + Math.sin(radians) * numberRadius + 4;
-      
+
       ticks.push(
         <SvgText
           key={`rpm-number-${i}`}
@@ -106,14 +135,16 @@ export default function RPMGauge({
           textAnchor="middle"
         >
           {Math.round(value)}
-        </SvgText>
+        </SvgText>,
       );
     }
-    
+
     return ticks;
   };
   return (
-    <Animated.View style={[styles.container, { transform: [{ scale: pulseAnimation }] }]}>
+    <Animated.View
+      style={[styles.container, { transform: [{ scale: pulseAnimation }] }]}
+    >
       <Svg width={size} height={size}>
         <Defs>
           <RadialGradient id="rpmGaugeGradient" cx="50%" cy="50%">
@@ -122,10 +153,13 @@ export default function RPMGauge({
           </RadialGradient>
           <RadialGradient id="rpmNeedleGradient" cx="30%" cy="30%">
             <Stop offset="0%" stopColor={rpm > redline ? "#FF6666" : color} />
-            <Stop offset="100%" stopColor={rpm > redline ? "#FF0000" : "#0066AA"} />
+            <Stop
+              offset="100%"
+              stopColor={rpm > redline ? "#FF0000" : "#0066AA"}
+            />
           </RadialGradient>
         </Defs>
-        
+
         {/* Gauge background */}
         <Circle
           cx={CENTER_X}
@@ -135,60 +169,64 @@ export default function RPMGauge({
           stroke="#333"
           strokeWidth="2"
         />
-        
+
         {/* Normal operating range */}
         <Path
-          d={generateGaugePath(CENTER_X, CENTER_Y, GAUGE_RADIUS - 3, -120, -120 + (240 * (redline * 0.9) / maxRpm))}
+          d={generateGaugePath(
+            CENTER_X,
+            CENTER_Y,
+            GAUGE_RADIUS - 3,
+            -120,
+            -120 + (240 * (redline * 0.9)) / maxRpm,
+          )}
           stroke="#00AA44"
           strokeWidth="6"
           fill="none"
           opacity="0.6"
         />
-        
+
         {/* Warning zone */}
         <Path
-          d={generateGaugePath(CENTER_X, CENTER_Y, GAUGE_RADIUS - 3, -120 + (240 * (redline * 0.9) / maxRpm), -120 + (240 * redline / maxRpm))}
+          d={generateGaugePath(
+            CENTER_X,
+            CENTER_Y,
+            GAUGE_RADIUS - 3,
+            -120 + (240 * (redline * 0.9)) / maxRpm,
+            -120 + (240 * redline) / maxRpm,
+          )}
           stroke="#FFD700"
           strokeWidth="6"
           fill="none"
           opacity="0.8"
         />
-        
+
         {/* Redline zone */}
         <Path
-          d={generateGaugePath(CENTER_X, CENTER_Y, GAUGE_RADIUS - 3, -120 + (240 * redline / maxRpm), 120)}
+          d={generateGaugePath(
+            CENTER_X,
+            CENTER_Y,
+            GAUGE_RADIUS - 3,
+            -120 + (240 * redline) / maxRpm,
+            120,
+          )}
           stroke="#FF4444"
           strokeWidth="6"
           fill="none"
           opacity="0.9"
         />
-        
+
         {/* Tick marks and numbers */}
         {generateRPMTicks()}
-        
 
-
-
-
-        {/* Needle */}
-
-        {/* <G
-           transform={`rotate(${needleRotation},
-          ${CENTER_X}, ${CENTER_Y})`}
-        > */}
-
-            <AnimatedG
-  transform={needleRotation.interpolate({
-    inputRange: [-120, 120],
-    outputRange: [
-      `rotate(-120, ${CENTER_X}, ${CENTER_Y})`,
-      `rotate(120, ${CENTER_X}, ${CENTER_Y})`
-    ]
-  })}
->  
-
-
-
+        <AnimatedG
+          transform={needleRotation.interpolate({
+            inputRange: [-120, 120],
+            outputRange: [
+              `rotate(-120, ${CENTER_X}, ${CENTER_Y})`,
+              `rotate(120, ${CENTER_X}, ${CENTER_Y})`,
+            ],
+          })}
+        >
           <Line
             x1={CENTER_X}
             y1={CENTER_Y}
@@ -198,7 +236,7 @@ export default function RPMGauge({
             strokeWidth="3"
             strokeLinecap="round"
           />
-          
+
           <Circle
             cx={CENTER_X}
             cy={CENTER_Y}
@@ -207,10 +245,9 @@ export default function RPMGauge({
             stroke="#fff"
             strokeWidth="2"
           />
-        {/* </G> */}
-</AnimatedG>
+          {/* </G> */}
+        </AnimatedG>
 
-        
         {/* Center circle */}
         <Circle
           cx={CENTER_X}
@@ -221,43 +258,45 @@ export default function RPMGauge({
           strokeWidth="1"
         />
       </Svg>
-      
+
       {/* Digital RPM display */}
       <View style={styles.digitalDisplay}>
-        <Text style={[styles.rpmText, { color: rpm > redline ? '#FF4444' : color }]}>
+        <Text
+          style={[styles.rpmText, { color: rpm > redline ? "#FF4444" : color }]}
+        >
           {formatRPM(rpm)}
         </Text>
         <Text style={styles.unitText}>x1000</Text>
       </View>
-      
+
       <Text style={styles.label}>RPM</Text>
     </Animated.View>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   digitalDisplay: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
   },
   rpmText: {
     fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
   },
   unitText: {
     fontSize: 9,
-    color: '#888',
+    color: "#888",
     marginTop: -3,
   },
   label: {
     fontSize: 12,
-    color: '#888',
-    fontWeight: 'bold',
+    color: "#888",
+    fontWeight: "bold",
     marginTop: 20,
   },
 });
