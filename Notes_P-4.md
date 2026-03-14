@@ -20,6 +20,11 @@
 3. Map Styling  (VehicleMap.css)
 
 
+### Part III: Environmental Control Systems
+
+1. Control Panel Component  (ControlPanel.tsx)
+
+
 
 
 
@@ -56,3 +61,11 @@
 
 1. src/types/web.ts Import shared-types error
    Resolved: Updated to point to '../../../shared-types'
+
+2. VehicleMap.tsx  Errors 
+    - .env Property 'env' does not exist on type 'ImportMeta'.
+
+
+3. ControlPanel.tsx EnvironmentUpdate Import Error:
+    Module '"../types/web"' declares 'EnvironmentUpdate' locally, but it is not exported.
+    Resolved: In types/web.ts - added export:  export type { EnvironmentUpdate };

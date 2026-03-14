@@ -68,3 +68,5 @@ export interface AdminDashboardProps {
   vehicleStates: Record<string, VehicleState>;
   connectionStatus: boolean;
 }
+
+export type { EnvironmentUpdate };
