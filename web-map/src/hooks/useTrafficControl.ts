@@ -3,11 +3,16 @@ import io, { Socket } from 'socket.io-client';
 import { VehicleState, EnvironmentUpdate } from '../../../shared-types';
 import { VehiclePosition, SystemMetrics, TrafficAlert, SpeedZone } from '../types/web';
 // Replace with your actual server IP
-const SERVER_URL = 'http://10.0.0.227:3001';
+const SERVER_URL = 'http://192.168.2.80:3001';
 export function useTrafficControl() {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [connected, setConnected] = useState(false);
   const [vehicles, setVehicles] = useState<Record<string, VehiclePosition>>({});
+  const [currentSpeedLimit, setCurrentSpeedLimit] = useState(() => {
+    const saved = localStorage.getItem('currentSpeedLimit');
+    return saved ? Number(saved) : 55;
+  });
+  
   const [systemMetrics, setSystemMetrics] = useState<SystemMetrics>({
     connectedDevices: { mobile: 0, tablet: 0, web: 0, test: 0 },
     serverUptime: 0,
@@ -24,7 +29,18 @@ export function useTrafficControl() {
       active: true
     }
   ]);
-  const [alerts, setAlerts] = useState<TrafficAlert[]>([]);
+
+
+  // Alerts State
+  // const [alerts, setAlerts] = useState<TrafficAlert[]>([]);
+
+  const [alerts, setAlerts] = useState<TrafficAlert[]>(() => {
+    const saved = localStorage.getItem('trafficAlerts');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+
+
   const latencyStartRef = useRef<number>(0);
   const messageCountRef = useRef<number>(0);
   const lastSecondRef = useRef<number>(Date.now());
@@ -86,10 +102,22 @@ export function useTrafficControl() {
         lastSecondRef.current = now;
       }
     });
+
+    // Listens for Client Count for connected Devices
+    newSocket.on('client-count', (counts: { mobile: number; tablet: number; web: number; test: number }) => {
+      setSystemMetrics(prev => ({
+        ...prev,
+        connectedDevices: counts
+      }));
+    });
+
+
     newSocket.on('connect_error', (error) => {
       console.log('Traffic control connection error:', error);
       setConnected(false);
     });
+
+
     // Ping for latency measurement
     const latencyInterval = setInterval(() => {
       if (newSocket.connected) {
@@ -115,23 +143,45 @@ export function useTrafficControl() {
       socket.emit('environment-update', update);
     }
   }, [socket, connected]);
-  const createAlert = useCallback((alert: Omit<TrafficAlert, 'id' | 'timestamp'>) => {
-    const newAlert: TrafficAlert = {
-      ...alert,
-      id: `alert-${Date.now()}`,
-      timestamp: Date.now()
-    };
+
+  // Create An Alert
+    const createAlert = useCallback((alert: Omit<TrafficAlert, 'id' | 'timestamp'>) => {
     
-    setAlerts(prev => [...prev, newAlert]);
+      const newAlert: TrafficAlert = {
+        ...alert,
+        id: `alert-${Date.now()}`,
+        timestamp: Date.now()
+      };
+
+        const updatedAlerts = [...alerts, newAlert];
+        setAlerts(updatedAlerts);
+        localStorage.setItem('trafficAlerts', JSON.stringify(updatedAlerts));
     
-    // Send to all connected clients
-    updateEnvironment({
-      alerts: [...alerts, newAlert].map(a => a.message)
-    });
-  }, [alerts, updateEnvironment]);
-  const updateSpeedLimit = useCallback((limit: number) => {
-    updateEnvironment({ speedLimit: limit });
-  }, [updateEnvironment]);
+        setAlerts(prev => [...prev, newAlert]);
+      
+        // Send to all connected clients
+        updateEnvironment({
+        alerts: updatedAlerts.map(a => a.message)
+      });
+    }, [alerts, updateEnvironment]);
+
+      // Update Speedlimot - Set The Current Speedlimit
+      const updateSpeedLimit = useCallback((limit: number) => {
+          setCurrentSpeedLimit(limit);
+          localStorage.setItem('currentSpeedLimit', String(limit));
+          updateEnvironment({ speedLimit: limit });
+    }, [updateEnvironment]);
+
+    // Clear The Alerts
+    const clearAlerts = useCallback(() => {
+      setAlerts([]);
+      localStorage.removeItem('trafficAlerts');
+      updateEnvironment({ alerts: [] });
+    }, [updateEnvironment]);
+
+
+
+
   return {
     socket,
     connected,
@@ -141,6 +191,8 @@ export function useTrafficControl() {
     alerts,
     updateEnvironment,
     createAlert,
-    updateSpeedLimit
+    updateSpeedLimit,
+    clearAlerts,
+    currentSpeedLimit
   };
 }

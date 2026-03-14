@@ -51,6 +51,9 @@ export default function App() {
           </Text>
         </View>
         
+
+
+
         <Text style={styles.title}>🚗 Drive Controls</Text>
         
         <View style={styles.speedDisplay}>
@@ -60,6 +63,17 @@ export default function App() {
           <Text style={styles.speedUnit}>MPH</Text>
         </View>
       </View>
+
+
+                {/* Traffic Alerts from Web Dashboard */}
+      {vehicleState.environment?.alerts?.length > 0 && (
+        <View style={styles.alertBanner}>
+          {vehicleState.environment.alerts.map((alert, index) => (
+            <Text key={index} style={styles.alertText}>⚠️ {alert}</Text>
+          ))}
+        </View>
+      )}
+
       {/* Main Control Area */}
       <View style={styles.controlArea}>
         
@@ -199,5 +213,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 20,
+  },
+    alertBanner: {
+    backgroundColor: '#FF4444',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+  },
+  alertText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });

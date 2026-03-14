@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, StatusBar as RNStatusBar, Dimensions } from 'react-native';
+import { StyleSheet, View, StatusBar as RNStatusBar, Dimensions, Text } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useDashboardConnection } from './src/hooks/useDashboardConnection';
 import DashboardHeader from './src/components/DashboardHeader';
@@ -21,6 +21,16 @@ export default function App() {
         speedLimit={vehicleState.environment.speedLimit}
       />
       
+      {/* Traffic Alerts from Web Dashboard */}
+      {vehicleState.environment.alerts.length > 0 && (
+        <View style={styles.alertBanner}>
+          {vehicleState.environment.alerts.map((alert, index) => (
+            <Text key={index} style={styles.alertText}>⚠️ {alert}</Text>
+          ))}
+        </View>
+      )}
+
+
       {/* Main gauge cluster */}
       <MainGauges
         speed={vehicleState.motion.speed}
@@ -47,5 +57,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000',
     justifyContent: 'space-between',
+  },
+    alertBanner: {
+    backgroundColor: '#FF4444',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+  },
+  alertText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });

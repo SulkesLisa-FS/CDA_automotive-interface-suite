@@ -13,7 +13,9 @@ function App() {
     alerts,
     updateEnvironment,
     createAlert,
-    updateSpeedLimit
+     clearAlerts,
+    updateSpeedLimit,
+    currentSpeedLimit
   } = useTrafficControl();
   const handleMapClick = (lng: number, lat: number) => {
     console.log(`Map clicked at: (${lng.toFixed(4)}, ${lat.toFixed(4)})`);
@@ -43,8 +45,9 @@ function App() {
             <ControlPanel
               onSpeedLimitChange={updateSpeedLimit}
               onAlertCreate={createAlert}
+              onAlertsClear={clearAlerts}
               onEnvironmentUpdate={updateEnvironment}
-              currentSpeedLimit={55}
+              currentSpeedLimit={currentSpeedLimit}
               activeAlerts={alerts}
             />
           </div>

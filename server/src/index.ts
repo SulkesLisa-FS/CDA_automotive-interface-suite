@@ -88,6 +88,26 @@ io.on('connection', (socket) => {
     socket.clientType = clientType;
     connectedClients[clientType]++;
     console.log(`${clientType} client connected. Total: ${connectedClients[clientType]}`);
+    io.emit('client-count', connectedClients);
+  });
+
+  socket.on('disconnect', () => {
+    if (socket.clientType) {
+      connectedClients[socket.clientType]--;
+      console.log(`${socket.clientType} client disconnected. Total: ${connectedClients[socket.clientType]}`);
+      io.emit('client-count', connectedClients);
+    }
+  });
+
+  // Updates Speedlimit using the EnvironmentUpdate hook
+  socket.on('environment-update', (data: EnvironmentUpdate) => {
+    if (data.speedLimit !== undefined) {
+      vehicleState.environment.speedLimit = data.speedLimit;
+    }
+    if (data.alerts) {
+      vehicleState.environment.alerts = data.alerts;
+    }
+    io.emit('vehicle-update', vehicleState);
   });
 
 

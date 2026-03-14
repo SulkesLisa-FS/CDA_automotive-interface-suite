@@ -4,6 +4,7 @@ import { TrafficAlert, EnvironmentUpdate } from '../types/web';
 interface ControlPanelProps {
   onSpeedLimitChange: (limit: number) => void;
   onAlertCreate: (alert: Omit<TrafficAlert, 'id' | 'timestamp'>) => void;
+  onAlertsClear: () => void;
   onEnvironmentUpdate: (update: EnvironmentUpdate) => void;
   currentSpeedLimit: number;
   activeAlerts: TrafficAlert[];
@@ -18,6 +19,7 @@ const ALERT_TYPES = [
 export default function ControlPanel({
   onSpeedLimitChange,
   onAlertCreate,
+  onAlertsClear,
   onEnvironmentUpdate,
   currentSpeedLimit,
   activeAlerts
@@ -148,6 +150,7 @@ export default function ControlPanel({
                 >
                   {severity.toUpperCase()}
                 </button>
+                
               ))}
             </div>
           </div>
@@ -197,6 +200,13 @@ export default function ControlPanel({
           
           <button className="create-alert-button" onClick={handleCreateAlert}>
             🚨 Create Alert
+          </button>
+          <button 
+            className="clear-alerts-button" 
+            onClick={onAlertsClear}
+            disabled={activeAlerts.length === 0}
+          >
+            🗑️ Clear All Alerts
           </button>
         </div>
       </div>
